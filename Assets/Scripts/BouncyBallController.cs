@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BouncyBallController : MonoBehaviour
 {
-    public AudioSource bounceAudio;
+
     public AudioManager audioManager;
     public Rigidbody rb;
     public float bounceForce = 6.5f;
@@ -36,8 +36,8 @@ public class BouncyBallController : MonoBehaviour
         else if (materialName == "Last Chunk (Instance)" && !GameManager.levelCompleted)
         {
             //The ball hits last chunk, player wins
-            GameManager.levelCompleted = true;
             audioManager.Play("Level Complete");
+            GameManager.levelCompleted = true;
             Debug.Log("Congratulations!");
         }
     }

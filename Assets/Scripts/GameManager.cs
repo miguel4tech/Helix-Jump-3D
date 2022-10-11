@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +13,9 @@ public class GameManager : MonoBehaviour
     public static bool levelCompleted;
     public static bool mute;
 
-
+    public GameObject gamePlayPanel;
     public GameObject gameOverPanel;
+    public GameObject startMenuPanel;
     public GameObject levelCompletedPanel;
 
 
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         TowerRotator.rotationSpeed = 150f;
         isGameStarted = gameOver = levelCompleted = false;
+        numberOfPassedChunks = 0;
     }
 
     // Update is called once per frame
@@ -45,8 +49,18 @@ public class GameManager : MonoBehaviour
         nextLevelText.text = (currentLevelIndex + 1).ToString();
         
         //Updates the progress UI bar(slider)
-        int progress = numberOfPassedChunks * 100/ FindObjectOfType<HelixManager>().numberOfPassedChunks;
+        int progress = numberOfPassedChunks * 100/FindObjectOfType<HelixManger>().numberOfChunks;
         gameProgressSlider.value = progress;
+
+        if (Input.GetMouseButtonDown(0) && !isGameStarted)
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            isGameStarted = true;
+            gamePlayPanel.SetActive(true);
+            startMenuPanel.SetActive(false);
+        }
 
         //Checks if game is over
         if(gameOver)

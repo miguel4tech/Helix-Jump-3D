@@ -21,7 +21,7 @@ public class Chunks : MonoBehaviour
 
             //Adds 1 to the number of chunks passed.
             GameManager.numberOfPassedChunks++;
-            Destroy(gameObject);
+           // Destroy(gameObject);
         }
     }
 }

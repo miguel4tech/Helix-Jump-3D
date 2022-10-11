@@ -14,8 +14,8 @@ public class HelixManger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Defines number of chunk per level, default as 6(levelNumber 1+5)
-        numberOfChunks = GameManager.currentLevelIndex + 5;
+        //Defines number of chunk per level, default as 7(levelNumber 1+6)
+        numberOfChunks = GameManager.currentLevelIndex + 6;
 
         for (int i = 0; i < numberOfChunks; i++)
         {

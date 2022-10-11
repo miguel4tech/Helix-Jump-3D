@@ -25,7 +25,8 @@ public class OnClickEvents : MonoBehaviour
             GameManager.mute = false;
             soundText.text = "";
         }
-        else if{
+        else
+        {
             GameManager.mute = true;
             soundText.text = "/";
         }
