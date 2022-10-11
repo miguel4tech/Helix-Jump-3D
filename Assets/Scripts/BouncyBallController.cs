@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class BouncyBallController : MonoBehaviour
 {
+    public AudioSource bounceAudio;
+    public AudioManager audioManager;
     public Rigidbody rb;
     public float bounceForce = 6.5f;
 
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        audioManager.Play("Bounce");
         rb.velocity = new Vector3(rb.velocity.x, bounceForce, rb.velocity.z);
         //Stores the item being collided with name
         string materialName = collision.transform.GetComponent<MeshRenderer>().material.name;
@@ -21,15 +29,15 @@ public class BouncyBallController : MonoBehaviour
         {
             //The ball hits an unsafe chunk, game-over Retry
             GameManager.gameOver = true;
+            audioManager.Play("Game Over");
             rb.velocity = new Vector3(0, 0 , 0);
             Debug.Log("Game over!");
-
-
         }
-        else if (materialName == "Last Chunk (Instance)")
+        else if (materialName == "Last Chunk (Instance)" && !GameManager.levelCompleted)
         {
             //The ball hits last chunk, player wins
             GameManager.levelCompleted = true;
+            audioManager.Play("Level Complete");
             Debug.Log("Congratulations!");
         }
     }
