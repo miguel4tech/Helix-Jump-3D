@@ -29,15 +29,16 @@ public class BouncyBallController : MonoBehaviour
         {
             //The ball hits an unsafe chunk, game-over Retry
             GameManager.gameOver = true;
-            audioManager.Play("Game Over");
+            audioManager.Play("gameOver");
             rb.velocity = new Vector3(0, 0 , 0);
             Debug.Log("Game over!");
         }
         else if (materialName == "Last Chunk (Instance)" && !GameManager.levelCompleted)
         {
             //The ball hits last chunk, player wins
-            audioManager.Play("Level Complete");
+            audioManager.Play("Level-Complete");
             GameManager.levelCompleted = true;
+            audioManager.Stop("Bounce);
             Debug.Log("Congratulations!");
         }
     }

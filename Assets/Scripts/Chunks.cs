@@ -15,13 +15,12 @@ public class Chunks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y < player.position.y )
+        if(transform.position.y > player.position.y )
         {
-            FindObjectOfType<AudioManager>().Play("whoosh");
-
             //Adds 1 to the number of chunks passed.
+            FindObjectOfType<AudioManager>().Play("whoosh");
             GameManager.numberOfPassedChunks++;
-           // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
