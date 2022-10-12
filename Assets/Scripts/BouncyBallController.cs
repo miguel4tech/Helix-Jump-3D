@@ -38,7 +38,6 @@ public class BouncyBallController : MonoBehaviour
             //The ball hits last chunk, player wins
             audioManager.Play("Level-Complete");
             GameManager.levelCompleted = true;
-            audioManager.Stop("Bounce);
             Debug.Log("Congratulations!");
         }
     }
