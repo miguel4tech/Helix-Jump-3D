@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
+    #region VARIABLES
     public static bool isGameStarted;
     public static bool gameOver;
     public static bool levelCompleted;
@@ -21,11 +22,15 @@ public class GameManager : MonoBehaviour
 
     public static int currentLevelIndex;
     public static int numberOfPassedChunks;
+    public static int score;
 
     public Slider gameProgressSlider;
     public TextMeshProUGUI currentLevelIndexText;
     public TextMeshProUGUI nextLevelText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
 
+    #endregion
     //Called at the beginning of the gameplay
     private void Awake()
     {
@@ -39,6 +44,8 @@ public class GameManager : MonoBehaviour
         TowerRotator.rotationSpeed = 150f;
         isGameStarted = gameOver = levelCompleted = false;
         numberOfPassedChunks = 0;
+
+        highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
     }
 
     // Update is called once per frame
@@ -46,15 +53,23 @@ public class GameManager : MonoBehaviour
     {
         //Update the UI
         currentLevelIndexText.text = currentLevelIndex.ToString();
-        nextLevelText.text = (currentLevelIndex + 1).ToString();
+        nextLevelText.text = (currentLevelIndex+1).ToString();
+        scoreText.text = score.ToString();
         
         //Updates the progress UI bar(slider)
         int progress = numberOfPassedChunks * 100/FindObjectOfType<HelixManger>().numberOfChunks;
         gameProgressSlider.value = progress;
 
-        if (Input.GetMouseButtonDown(0) && !isGameStarted)
+
+        //Start A Level
+        //Commented out for PC if (Input.GetMouseButtonDown(0) && !isGameStarted)
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isGameStarted)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            //Commented out for PC
+            //if (EventSystem.current.IsPointerOverGameObject())
+            //    return;
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 return;
 
             isGameStarted = true;
@@ -70,6 +85,15 @@ public class GameManager : MonoBehaviour
             TowerRotator.rotationSpeed = 0;
             if (Input.GetButtonDown("Fire1"))
             {
+                //Check for highscore
+                if(score > PlayerPrefs.GetInt("Highscore", 0))
+                {
+                    PlayerPrefs.SetInt("Highscore", score);
+                }
+
+                //Resets the value to zero 0
+                score = 0;
+                
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
@@ -79,8 +103,9 @@ public class GameManager : MonoBehaviour
             levelCompletedPanel.SetActive(true);
             if (Input.GetButtonDown("Fire1"))
             {
-                PlayerPrefs.GetInt("CurrentLevelIndex", currentLevelIndex + 1);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
+                SceneManager.LoadScene("Level");
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
     }

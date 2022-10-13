@@ -16,7 +16,8 @@ public class BouncyBallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        audioManager.Play("Bounce");
+        if(!GameManager.levelCompleted)
+            audioManager.Play("Bounce");
         rb.velocity = new Vector3(rb.velocity.x, bounceForce, rb.velocity.z);
         //Stores the item being collided with name
         string materialName = collision.transform.GetComponent<MeshRenderer>().material.name;
