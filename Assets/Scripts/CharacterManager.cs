@@ -31,5 +31,10 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         
+        //if (GameManager.gameOver)
+        //{
+        //    characters[3].SetActive(true);
+        //    //characters.
+        //}
     }
 }

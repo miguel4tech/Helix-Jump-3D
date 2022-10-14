@@ -41,11 +41,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-        TowerRotator.rotationSpeed = 150f;
+        TowerRotator.rotationSpeed = 10f;
         isGameStarted = gameOver = levelCompleted = false;
         numberOfPassedChunks = 0;
 
-        highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
+        highScoreText.text = "" + PlayerPrefs.GetInt("Highscore", 0);
     }
 
     // Update is called once per frame
@@ -62,15 +62,17 @@ public class GameManager : MonoBehaviour
 
 
         //Start A Level
-        //Commented out for PC if (Input.GetMouseButtonDown(0) && !isGameStarted)
+
+        //Commented out for PC
+        //if (Input.GetMouseButtonDown(0) && !isGameStarted)
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isGameStarted)
         {
             //Commented out for PC
             //if (EventSystem.current.IsPointerOverGameObject())
-            //    return;
+            //   return;
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                return;
+                {return;}
 
             isGameStarted = true;
             gamePlayPanel.SetActive(true);
