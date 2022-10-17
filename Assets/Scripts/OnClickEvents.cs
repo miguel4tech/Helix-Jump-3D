@@ -18,6 +18,7 @@ public class OnClickEvents : MonoBehaviour
         Application.Quit();
         Debug.Log("Game Exited");
     }
+  
     public void ToggleMute()
     {
         if(GameManager.mute)

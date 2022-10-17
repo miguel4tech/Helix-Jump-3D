@@ -10,14 +10,17 @@ public class GameManager : MonoBehaviour
 {
     #region VARIABLES
     public static bool isGameStarted;
+    public static bool isGamePaused;
     public static bool gameOver;
     public static bool levelCompleted;
     public static bool mute;
 
     public GameObject gamePlayPanel;
     public GameObject gameOverPanel;
+    public GameObject gamePausedPanel;
     public GameObject startMenuPanel;
     public GameObject levelCompletedPanel;
+    public GameObject levelUpCharacter;
 
 
     public static int currentLevelIndex;
@@ -42,8 +45,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         TowerRotator.rotationSpeed = 10f;
-        isGameStarted = gameOver = levelCompleted = false;
+        isGameStarted = isGamePaused = gameOver = levelCompleted = false;
         numberOfPassedChunks = 0;
+
+        AdManager.instance.RequestInterstitial();
 
         highScoreText.text = "" + PlayerPrefs.GetInt("Highscore", 0);
     }
@@ -53,8 +58,8 @@ public class GameManager : MonoBehaviour
     {
         //Update the UI
         currentLevelIndexText.text = currentLevelIndex.ToString();
-        nextLevelText.text = (currentLevelIndex+1).ToString();
         scoreText.text = score.ToString();
+        nextLevelText.text = (currentLevelIndex+1).ToString();
         
         //Updates the progress UI bar(slider)
         int progress = numberOfPassedChunks * 100/FindObjectOfType<HelixManger>().numberOfChunks;
@@ -93,6 +98,8 @@ public class GameManager : MonoBehaviour
                     PlayerPrefs.SetInt("Highscore", score);
                 }
 
+                AdManager.instance.ShowInterstitial();
+
                 //Resets the value to zero 0
                 score = 0;
                 
@@ -100,12 +107,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
         if (levelCompleted)
         {
             levelCompletedPanel.SetActive(true);
             if (Input.GetButtonDown("Fire1"))
             {
                 PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
+                Instantiate(levelUpCharacter, transform.position, transform.rotation);
                 SceneManager.LoadScene("Level");
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }

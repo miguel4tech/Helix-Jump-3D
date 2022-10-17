@@ -30,11 +30,6 @@ public class CharacterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        //if (GameManager.gameOver)
-        //{
-        //    characters[3].SetActive(true);
-        //    //characters.
-        //}
+
     }
 }

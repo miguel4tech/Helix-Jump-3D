@@ -21,7 +21,7 @@ public class Chunks : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("whoosh");
             GameManager.numberOfPassedChunks++;
             GameManager.score++;
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
