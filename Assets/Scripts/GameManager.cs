@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     public static bool mute;
 
     public GameObject gamePlayPanel;
+    public GameObject isGameStartedButton;
     public GameObject gameOverPanel;
     public GameObject gamePausedPanel;
+    public GameObject isGamePausedButton;
     public GameObject startMenuPanel;
     public GameObject levelCompletedPanel;
     public GameObject levelUpCharacter;
@@ -107,6 +109,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if(isGamePaused)
+        {
+            gamePausedPanel.SetActive(true);
+            isGamePausedButton.SetActive(false);
+        }
+
 
         if (levelCompleted)
         {
@@ -114,10 +122,16 @@ public class GameManager : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
-                Instantiate(levelUpCharacter, transform.position, transform.rotation);
                 SceneManager.LoadScene("Level");
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
+        }
+
+        //Targeted at level 2, added an extra player to the scene, thereby increasing difficulty
+        if(currentLevelIndex == 2)
+        {
+            levelUpCharacter.SetActive(true);
+            //Instantiate(levelUpCharacter, transform.position, transform.rotation);
         }
     }
 }

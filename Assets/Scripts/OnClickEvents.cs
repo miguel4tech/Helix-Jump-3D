@@ -32,4 +32,15 @@ public class OnClickEvents : MonoBehaviour
             soundText.text = "/";
         }
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        GameManager.isGamePaused = true;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        GameManager.isGamePaused = false;
+    }
 }
