@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject gamePlayPanel;
     public GameObject isGameStartedButton;
     public GameObject gameOverPanel;
-    public GameObject gamePausedPanel;
+    public GameObject pauseMenuPanel;
     public GameObject isGamePausedButton;
     public GameObject startMenuPanel;
     public GameObject levelCompletedPanel;
@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI nextLevelText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
-
     #endregion
     //Called at the beginning of the gameplay
     private void Awake()
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
 
         if(isGamePaused)
         {
-            gamePausedPanel.SetActive(true);
+            pauseMenuPanel.SetActive(true);
             isGamePausedButton.SetActive(false);
         }
 
@@ -128,7 +127,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Targeted at level 2, added an extra player to the scene, thereby increasing difficulty
-        if(currentLevelIndex == 2)
+        if(currentLevelIndex >= 2)
         {
             levelUpCharacter.SetActive(true);
             //Instantiate(levelUpCharacter, transform.position, transform.rotation);
